@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { userAuth, checkRole } = require("../utils/Auth");
+const { userAuth, checkRole, block } = require("../utils/Auth");
 const {
   stationRegister,
   getAllStation,
@@ -7,7 +7,6 @@ const {
   deleteStation,
   updateStation,
   rateStation,
-  block,
 } = require("../utils/Station");
 
 router.post("/register-station", userAuth, block, async (req, res) => {
