@@ -468,9 +468,6 @@
           "name": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
-          },
           "email": {
             "type": "string"
           },
@@ -588,9 +585,6 @@
                 "name": {
                   "type": "string"
                 },
-                "username": {
-                  "type": "string"
-                },
                 "email": {
                   "type": "string"
                 },
@@ -613,7 +607,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "email": {
                   "type": "string"
                 },
                 "password": {
@@ -632,9 +626,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string"
-                },
                 "email": {
                   "type": "string"
                 },
@@ -889,7 +880,7 @@
         }
       },
       "UserRegisterResponse400": {
-        "description": "username or email, phone are already taken",
+        "description": "email or phone are already taken",
         "content": {
           "application/json": {
             "schema": {
@@ -963,10 +954,6 @@
                   "type": "boolean",
                   "example": true
                 },
-                "username": {
-                  "type": "string",
-                  "example": "moshe"
-                },
                 "role": {
                   "type": "string",
                   "example": "admin"
@@ -1035,9 +1022,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string"
-                },
                 "_id": {
                   "type": "string"
                 },
@@ -1073,9 +1057,6 @@
                   "_id": {
                     "type": "string"
                   },
-                  "username": {
-                    "type": "string"
-                  },
                   "email": {
                     "type": "string"
                   },
@@ -1093,7 +1074,6 @@
                   }
                 },
                 "example": {
-                  "username": "shayjr122",
                   "email": "shayjr122@gmail.com",
                   "name": "shay",
                   "phone": "0528084109",
