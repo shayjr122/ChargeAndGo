@@ -28,6 +28,11 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    messages: {
+      type: [{ type: String }],
+      require: true,
+      default: [],
+    },
   },
   { timestamps: true }
 );

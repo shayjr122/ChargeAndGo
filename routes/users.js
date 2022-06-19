@@ -13,12 +13,24 @@ const {
   userChangePassword,
   userBlock,
   block,
+  userNotification,
 } = require("../utils/Auth");
 
 //#region Admin Routes
+router.post(
+  "/notification/:id",
+  userAuth,
+  checkRole(["admin"]),
+  async (req, res) => {
+    await userNotification(req.user._id, req.body.message, res);
+  }
+);
 // blocking user
 router.put("/block/:id", userAuth, block, async (req, res) => {
-  await userBlock(userId, res);
+  await userBlock(userId, true, res);
+});
+router.put("/unblock/:id", userAuth, block, async (req, res) => {
+  await userBlock(userId, false, res);
 });
 // Admin Registration Route
 router.post("/register-admin", async (req, res) => {
@@ -33,36 +45,28 @@ router.get("/", userAuth, checkRole(["admin"]), async (req, res) => {
   await getListUsers(res);
 });
 
-router.delete(
-  "/block/:id",
-  userAuth,
-  checkRole(["admin"]),
-  async (req, res) => {
-    await userDelete(req.params.id, res);
-  }
-);
-// TODO: Route block user by email
+router.delete("/:id", userAuth, checkRole(["admin"]), async (req, res) => {
+  await userDelete(req.params.id, res);
+});
 
 //#endregion
 
 //#region User Routes
 // Users Registeration Route
-// TODO: remove username
 router.post("/register-user", async (req, res) => {
   await userRegister(req.body, "user", res);
 });
 // Users Login Route
-// TODO: email + password
 router.post("/login-user", async (req, res) => {
   await userLogin(req.body, "user", res);
 });
 // Profile Route
-router.get("/profile", block, userAuth, async (req, res) => {
+router.get("/profile", userAuth, block, async (req, res) => {
   return res.json(serializeUser(req.user));
 });
 // Delete Route
-router.delete("/delete", block, userAuth, async (req, res) => {
-  await userDelete(req.user.email, res);
+router.delete("/delete", userAuth, block, async (req, res) => {
+  await userDelete(req.user._id, res);
 });
 // Update Route
 router.put("/update", userAuth, block, async (req, res) => {

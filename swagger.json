@@ -280,7 +280,7 @@
     },
     "/api/users/block/{id}/": {
       "put": {
-        "summary": "delete user by id",
+        "summary": "block user by id",
         "parameters": [
           {
             "in": "path",
@@ -289,7 +289,7 @@
               "type": "string"
             },
             "required": true,
-            "description": "Email of the user to delete."
+            "description": "user id"
           }
         ],
         "responses": {
@@ -303,7 +303,45 @@
             "$ref": "#/components/responses/ServerErrorResponse500"
           }
         },
-        "tags": ["admin"]
+        "tags": ["admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/unblock/{id}/": {
+      "put": {
+        "summary": "unblock user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "user id"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserBlockResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerErrorResponse500"
+          }
+        },
+        "tags": ["admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/stations": {
@@ -431,6 +469,39 @@
         "responses": {
           "201": {
             "$ref": "#/components/responses/StationRateResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/notification/:{id}": {
+      "post": {
+        "summary": "rate station by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Notification"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/NotificationResponse201"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -574,6 +645,22 @@
       }
     },
     "requestBodies": {
+      "Notification": {
+        "description": "message.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "UserRegister": {
         "description": "User object.",
         "required": true,
@@ -713,6 +800,25 @@
       }
     },
     "responses": {
+      "NotificationResponse201": {
+        "description": "message successfully sent.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "message successfully sent."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
       "StationRateResponse201": {
         "description": "The station was successfully rated.",
         "content": {

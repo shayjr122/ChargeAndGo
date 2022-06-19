@@ -5,28 +5,44 @@ const User = require("../models/User");
 const { SECRET } = require("../config");
 
 //#region User Functions
+const userNotification = async (userId, message, res) => {
+  try {
+    user = await User.findOne({ _id: userId });
+    await user.messages.push(message);
+    await user.save();
+    return res.status(201).json({
+      message: "message successfully sent.",
+      success: true,
+    });
+  } catch {
+    return res.status(500).json({
+      message: "Unable to sent massage.",
+      success: false,
+    });
+  }
+};
 const getListUsers = async (res) => {
   let users = await User.find({}, { password: 0, __v: 0 });
   res.status(200).json(users);
 };
 
-const userBlock = async (userId, res) => {
+const userBlock = async (userId, flag, res) => {
   try {
     await User.updateOne(
-      { _id: req.user._id },
+      { _id: userId },
       {
         $set: {
-          block: true,
+          block: flag,
         },
       }
     );
     return res.status(201).json({
-      message: "User blocked.",
+      message: flag ? "User blocked." : "User unblocked.",
       success: true,
     });
   } catch {
     return res.status(500).json({
-      message: "Unable to block account.",
+      message: flag ? "Unable to block account." : "Unable to unblock account.",
       success: false,
     });
   }
@@ -129,7 +145,6 @@ const userLogin = async (userCreds, role, res) => {
       {
         user_id: user._id,
         role: user.role,
-        block: user.block,
         email: user.email,
       },
       SECRET,
@@ -253,13 +268,9 @@ const checkRole = (roles) => (req, res, next) => {
     : next();
 };
 
-const block = () => (req, res, next) => {
-  if (req.user.block) {
-    res.status(401).json({ message: "User blocked" });
-  } else {
-    next();
-  }
-};
+function block(req, res, next) {
+  req.user.block ? res.status(401).json({ message: "User blocked" }) : next();
+}
 
 //#endregion
 
@@ -295,4 +306,5 @@ module.exports = {
   userChangePassword,
   userBlock,
   block,
+  userNotification,
 };

@@ -6,7 +6,7 @@ const OrderSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
   stationId: { type: Schema.Types.ObjectId, ref: "stations", required: true },
   price: { type: Number, required: true },
-  appointmentDate: { type: Date, default: Date.now },
+  appointmentDate: { type: Date, default: Date.now, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   status: {
