@@ -1,0 +1,1270 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "API documentation for charge and go",
+    "version": "1.0.0-oas3",
+    "title": "Swagger ChargeAndGo",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "shayjr122@gmail.com"
+    },
+    "license": {
+      "name": "Apache",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "user audit and functionality"
+    },
+    {
+      "name": "admin",
+      "description": "user audit and functionality"
+    },
+    {
+      "name": "order",
+      "description": "station orders functionality"
+    },
+    {
+      "name": "station",
+      "description": "station functionality"
+    }
+  ],
+  "paths": {
+    "/api/users/register-user": {
+      "post": {
+        "summary": "/api/users/register-user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserRegister"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserRegisterResponse201"
+          },
+          "400": {
+            "$ref": "#/components/responses/UserRegisterResponse400"
+          },
+          "500": {
+            "$ref": "#/components/responses/UserRegisterResponse500"
+          }
+        },
+        "tags": ["user"]
+      }
+    },
+    "/api/users/login-user": {
+      "post": {
+        "summary": "/api/users/login-user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserLogin"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserLoginResponse200"
+          },
+          "403": {
+            "$ref": "#/components/responses/UserLoginResponse403"
+          },
+          "404": {
+            "$ref": "#/components/responses/UserLoginResponse404"
+          }
+        },
+        "tags": ["user"]
+      }
+    },
+    "/api/users/register-admin": {
+      "post": {
+        "summary": "/api/users/register-admin",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserRegister"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserRegisterResponse201"
+          },
+          "400": {
+            "$ref": "#/components/responses/UserRegisterResponse400"
+          },
+          "500": {
+            "$ref": "#/components/responses/UserRegisterResponse500"
+          }
+        },
+        "tags": ["admin"]
+      }
+    },
+    "/api/users/login-admin": {
+      "post": {
+        "summary": "/api/users/login-admin",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserLogin"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserLoginResponse200"
+          },
+          "403": {
+            "$ref": "#/components/responses/UserLoginResponse403"
+          },
+          "404": {
+            "$ref": "#/components/responses/UserLoginResponse404"
+          }
+        },
+        "tags": ["admin"]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "/api/users",
+        "description": "(Admin Only) get all registerd accounts.",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UsersProfileResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/profile": {
+      "get": {
+        "summary": "/api/users/profile",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserProfileResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["user", "admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/delete": {
+      "delete": {
+        "summary": "/api/users/delete",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserDeleteResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["user", "admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "delete": {
+        "summary": "delete user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Email of the user to delete."
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserDeleteResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["user", "admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/update": {
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserUpdate"
+        },
+        "summary": "/api/users/update",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserUpdateResponse201"
+          },
+          "400": {
+            "$ref": "#/components/responses/UserUpdateResponse400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["user", "admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/change-password": {
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserChangePassword"
+        },
+        "summary": "/api/users/update",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserChangePasswordResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/UserChangePasswordResponse403"
+          }
+        },
+        "tags": ["user", "admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/stations/register-station": {
+      "post": {
+        "summary": "Create a new station",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/StationRegister"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/StationRegisterResponse201"
+          },
+          "400": {
+            "$ref": "#/components/responses/StationRegisterResponse400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/StationRegisterResponse500"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/block/{id}/": {
+      "put": {
+        "summary": "delete user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Email of the user to delete."
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserBlockResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerErrorResponse500"
+          }
+        },
+        "tags": ["admin"]
+      }
+    },
+    "/api/stations": {
+      "get": {
+        "summary": "get list of all user stations",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StationsResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/stations/all": {
+      "get": {
+        "summary": "get list of all exist stations",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/StationsResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/stations/{id}": {
+      "delete": {
+        "summary": "delete station by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "delete station by id."
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/StationDeleteResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "update station by id",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/StationUpdate"
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "update: address, station type, latitude, longitude."
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/StationUpdateResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/stations/{id}/{rate}": {
+      "post": {
+        "summary": "rate station by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id"
+          },
+          {
+            "in": "path",
+            "name": "rate",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "rate"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/StationRateResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "user"]
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "stationId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "price": {
+            "type": "number"
+          },
+          "appointmentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "Order Status",
+            "enum": ["placed", "approved", "inProgress", "finished"]
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Station": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "num_of_ranks": {
+            "type": "number"
+          },
+          "stationtype": {
+            "type": "string",
+            "enum": ["A", "B", "C", "D"]
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            }
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "UserRegister": {
+        "description": "User object.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserLogin": {
+        "description": "User login credentials.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserUpdate": {
+        "description": "User update object.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserChangePassword": {
+        "description": "User new password object.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "type": "string"
+                },
+                "newPassword": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationRegister": {
+        "description": "station object for create new station.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "stationtype": {
+                  "type": "string",
+                  "enum": ["A", "B", "C", "D"]
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationUpdate": {
+        "description": "update station object.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "stationtype": {
+                  "type": "string",
+                  "enum": ["A", "B", "C", "D"]
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "StationRateResponse201": {
+        "description": "The station was successfully rated.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The station was successfully rated."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationsResponse200": {
+        "description": "list of stations.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "type": "number"
+                  },
+                  "num_of_ranks": {
+                    "type": "number"
+                  },
+                  "stationtype": {
+                    "type": "string",
+                    "enum": ["A", "B", "C", "D"]
+                  },
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  },
+                  "orders": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Order"
+                    }
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationRegisterResponse201": {
+        "description": "the station created seccessfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The station was successfully registred."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationRegisterResponse400": {
+        "description": "the station alrady exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Station alrady exist."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "StationRegisterResponse500": {
+        "description": "Unexpected error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unable to create station."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserRegisterResponse201": {
+        "description": "the user created seccessfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are successfully registred. Please login."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserRegisterResponse500": {
+        "description": "Unexpected error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unable to create your account."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserRegisterResponse400": {
+        "description": "username or email, phone are already taken",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Username is already taken."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserLoginResponse404": {
+        "description": "Invalid username or password.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid login credentials."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserLoginResponse403": {
+        "description": "Invalid portal.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Please make sure you are logging in from the right portal."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserLoginResponse200": {
+        "description": "User login successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User login successfully."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "username": {
+                  "type": "string",
+                  "example": "moshe"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "admin"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "moshe@moshe.com"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "Bearer ${token}"
+                },
+                "expiresIn": {
+                  "type": "number",
+                  "example": 168
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserChangePasswordResponse201": {
+        "description": "User password updated successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User password was updated successfully. please login."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserChangePasswordResponse403": {
+        "description": "Incorrect user password.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Incorrect password."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserProfileResponse200": {
+        "description": "User profile object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "_id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UsersProfileResponse200": {
+        "description": "User profiles list.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "username": "shayjr122",
+                  "email": "shayjr122@gmail.com",
+                  "name": "shay",
+                  "phone": "0528084109",
+                  "updatedAt": "2022-06-13T09:02:35.885Z",
+                  "createdAt": "2022-06-13T09:02:35.885Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserDeleteResponse201": {
+        "description": "User deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "User deleted successfully.",
+                "success": true
+              }
+            }
+          }
+        }
+      },
+      "StationUpdateResponse201": {
+        "description": "Station updated successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "Station update successfully.",
+                "success": true
+              }
+            }
+          }
+        }
+      },
+      "StationDeleteResponse201": {
+        "description": "Station deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "station deleted successfully.",
+                "success": true
+              }
+            }
+          }
+        }
+      },
+      "UserUpdateResponse201": {
+        "description": "User updated successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "User update successfully.",
+                "success": true
+              }
+            }
+          }
+        }
+      },
+      "UserUpdateResponse400": {
+        "description": "Unsuccess to update user - username, phone, email already taken.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "Username is already taken.",
+                "success": false
+              }
+            }
+          }
+        }
+      },
+      "UserBlockResponse201": {
+        "description": "User deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User deleted successfully."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServerErrorResponse500": {
+        "description": "unexpected error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "unexpected error."
+                },
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string",
+              "example": "Unauthorized"
+            }
+          }
+        }
+      }
+    }
+  }
+}
