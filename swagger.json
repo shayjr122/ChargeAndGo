@@ -278,7 +278,7 @@
         ]
       }
     },
-    "/api/users/block/{id}/": {
+    "/api/users/block/{id}": {
       "put": {
         "summary": "block user by id",
         "parameters": [
@@ -311,7 +311,7 @@
         ]
       }
     },
-    "/api/users/unblock/{id}/": {
+    "/api/users/unblock/{id}": {
       "put": {
         "summary": "unblock user by id",
         "parameters": [
@@ -482,7 +482,7 @@
         ]
       }
     },
-    "/notification/:{id}": {
+    "/api/users/notification/:{id}": {
       "post": {
         "summary": "rate station by id",
         "parameters": [
@@ -502,6 +502,116 @@
         "responses": {
           "201": {
             "$ref": "#/components/responses/NotificationResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["station"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/orders": {
+      "get": {
+        "summary": "get list of all orders",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrdersResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["order"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id"
+          }
+        ],
+        "summary": "get list of order",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrderResponse200"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["order"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "delete order by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "delete order by id."
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OrderDeleteResponse201"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "tags": ["order"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/orders/station/:{stationId}": {
+      "post": {
+        "summary": "Create a new order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stationId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "stationId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderRegister"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OrderRegisterResponse201"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -797,9 +907,54 @@
             }
           }
         }
+      },
+      "OrderRegister": {
+        "description": "order object for create new order.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "endTime": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "responses": {
+      "OrdersResponse200": {
+        "description": "orders successfully get.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        }
+      },
+      "OrderResponse200": {
+        "description": "order successfully get.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Order"
+            }
+          }
+        }
+      },
       "NotificationResponse201": {
         "description": "message successfully sent.",
         "content": {
@@ -810,6 +965,25 @@
                 "message": {
                   "type": "string",
                   "example": "message successfully sent."
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrderRegisterResponse201": {
+        "description": "The order created successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The order created successfully"
                 },
                 "success": {
                   "type": "boolean"
@@ -1251,6 +1425,28 @@
               },
               "example": {
                 "message": "station deleted successfully.",
+                "success": true
+              }
+            }
+          }
+        }
+      },
+      "OrderDeleteResponse201": {
+        "description": "Order deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "example": {
+                "message": "Order deleted successfully.",
                 "success": true
               }
             }

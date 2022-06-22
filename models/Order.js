@@ -11,7 +11,7 @@ const OrderSchema = new Schema({
   endTime: { type: Date, required: true },
   status: {
     type: String,
-    enum: ["placed", "approved", "inProgress", "finished"],
+    enum: ["placed", "available"],
     default: "placed",
     required: true,
   },
