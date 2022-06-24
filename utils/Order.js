@@ -68,9 +68,10 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       message: "Order create successfully.",
       success: true,
     });
-  } catch {
+  } catch (error) {
     return res.status(500).json({
       message: "Unable to create order.",
+      err: error,
       success: false,
     });
   }
