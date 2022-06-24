@@ -64,7 +64,7 @@ const orderCreate = async (userId, stationId, startTime, endTime, res) => {
     });
     if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
       return res.status(500).json({
-        message: "Unable to create order.",
+        message: "Unable to create order. - not Avalable",
         success: false,
       });
     }
