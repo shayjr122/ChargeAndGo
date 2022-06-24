@@ -25,13 +25,12 @@ function dateCheck(from, to, check) {
   return false;
 }
 
-const orderAvalable = async (stationId, from, to) => {
+const orderAvalable = async (station, from, to) => {
   try {
     flag = true;
-    let station = await Station.findOne({ _id: stationId }).populate("orders");
     station.orders.forEach((order) => {
       if (
-        dateCheck(order.startTime, order.endTime, from) &&
+        dateCheck(order.startTime, order.endTime, from) ||
         dateCheck(order.startTime, order.endTime, to)
       ) {
         flag = false;
@@ -43,7 +42,7 @@ const orderAvalable = async (stationId, from, to) => {
 
 const orderCreate = async (user, stationId, startTime, endTime, res) => {
   try {
-    let station = await Station.findOne({ _id: stationId });
+    let station = await Station.findOne({ _id: stationId }).populate("orders");
     if (!station) {
       return res.status(404).json({
         message: "Station doesn't exist.",
@@ -56,7 +55,7 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       endTime: new Date(endTime),
       stationId: stationId,
     });
-    if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
+    if (!(await orderAvalable(station, order.startTime, order.endTime))) {
       return res.status(500).json({
         message: "Unable to create order. - not Avalable",
         success: false,
