@@ -12,8 +12,8 @@ router.post("/station/:stationId/", userAuth, block, async (req, res) => {
     res
   );
 });
-router.get("/", userAuth, block, async (req, res) => {
-  await orders(res);
+router.get("/:stationId", userAuth, block, async (req, res) => {
+  await orders(req.params.stationId, res);
 });
 router.get("/:orderId", userAuth, block, async (req, res) => {
   await order(req.params.orderId, res);

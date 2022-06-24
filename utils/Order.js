@@ -2,8 +2,8 @@ const Order = require("../models/Order");
 const User = require("../models/User");
 const Station = require("../models/Station");
 
-const orders = async (res) => {
-  let orders = await Order.find({});
+const orders = async (stationId, res) => {
+  let orders = await Station.findOne({ _id: stationId }).populate("orders");
   return res.status(200).json(orders);
 };
 const order = async (orderId, res) => {
