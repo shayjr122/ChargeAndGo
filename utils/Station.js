@@ -48,6 +48,9 @@ const validateStation = async (address) => {
   return station ? false : true;
 };
 
+const deleteUserStation = async (userId) => {
+  let station = await Station.deleteMeny({ userId: userId });
+};
 const deleteStation = async (stationId, user, res) => {
   try {
     let station = await Station.findOne({ _id: stationId });
@@ -173,4 +176,5 @@ module.exports = {
   deleteStation,
   updateStation,
   rateStation,
+  deleteUserStation,
 };

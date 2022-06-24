@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const User = require("../models/User");
 const { SECRET } = require("../config");
+const { deleteUserStation } = require("../utils/Station");
 
 //#region User Functions
 const userNotification = async (userId, message, res) => {
@@ -170,6 +171,8 @@ const userLogin = async (userCreds, role, res) => {
 
 const userDelete = async (email, res) => {
   try {
+    user = await User.findOne({ email: email });
+    await deleteUserStation(user._id);
     await User.deleteOne({ email: email });
     return res.status(201).json({
       message: "User deleted successfully.",
