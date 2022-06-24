@@ -26,8 +26,8 @@ function dateCheck(from, to, check) {
 }
 
 const orderAvalable = async (station, from, to) => {
+  let flag = true;
   try {
-    flag = true;
     station.orders.forEach((order) => {
       if (
         dateCheck(order.startTime, order.endTime, from) ||
@@ -55,6 +55,7 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       endTime: new Date(endTime),
       stationId: stationId,
     });
+
     if (!(await orderAvalable(station, order.startTime, order.endTime))) {
       return res.status(500).json({
         message: "Unable to create order. - not Avalable",
