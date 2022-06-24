@@ -28,7 +28,7 @@ function dateCheck(from, to, check) {
 const orderAvalable = async (stationId, from, to) => {
   try {
     flag = true;
-    let station = await Station.findOne({ _id: stationId });
+    let station = await Station.findOne({ _id: stationId }).populate("orders");
     station.orders.forEach((order) => {
       if (
         dateCheck(order.startTime, order.endTime, from) &&
