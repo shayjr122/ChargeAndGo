@@ -51,6 +51,7 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       });
     }
     let order = new Order({
+      userId:user._id
       startTime: new Date(startTime),
       endTime: new Date(endTime),
     });
