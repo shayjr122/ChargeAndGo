@@ -21,7 +21,7 @@ const stationRegister = async (userDets, user, res) => {
 
 const getAllStation = async (req, res) => {
   try {
-    let stations = await Station.find({}, { __v: 0 });
+    let stations = await Station.find({}, { __v: 0 }).populate("orders");
     res.status(200).json(stations);
   } catch {
     return res.status(500).json({
