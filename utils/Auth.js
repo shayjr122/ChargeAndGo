@@ -123,7 +123,7 @@ const userLogin = async (userCreds, role, res) => {
   let { email, password } = userCreds;
   // First Check if the username is in the database
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user || user.block) {
     return res.status(404).json({
       message: "Invalid login credentials.",
       success: false,
