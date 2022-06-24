@@ -62,7 +62,7 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       });
     }
     await order.save();
-    station.orders.push(order);
+    station.orders.push(order._id);
     await station.save();
     res.status(201).json({
       message: "Order create successfully.",
