@@ -54,6 +54,7 @@ const orderCreate = async (user, stationId, startTime, endTime, res) => {
       userId: user._id,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
+      stationId: stationId,
     });
     if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
       return res.status(500).json({
