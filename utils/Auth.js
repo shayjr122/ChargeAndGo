@@ -188,24 +188,12 @@ const userDelete = async (email, res) => {
 
 const userUpdate = async (req, res) => {
   ser = serializeUpdateUser(req.user, req.body);
-  usernameisvalid =
-    (ser.username !== req.user.username &&
-      (await validateUsername(ser.username))) ||
-    ser.username === req.user.username;
   phoneisvalid =
     (ser.phone !== req.user.phone && (await validatePhone(ser.phone))) ||
     ser.phone === req.user.phone;
   emailisvalid =
     (ser.email !== req.user.email && (await validateEmail(ser.email))) ||
     ser.email === req.user.email;
-
-  // check if username is alredy taken
-  if (!usernameisvalid) {
-    return res.status(400).json({
-      message: `Username is already taken.`,
-      success: false,
-    });
-  }
 
   // check if phone is alredy taken
   if (!phoneisvalid) {
