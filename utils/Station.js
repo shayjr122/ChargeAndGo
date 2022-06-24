@@ -2,14 +2,6 @@ const Station = require("../models/Station");
 
 const stationRegister = async (userDets, user, res) => {
   try {
-    let stationIsValid = await validateStation(userDets.address);
-
-    if (!stationIsValid) {
-      return res.status(400).json({
-        message: `Station is already taken.`,
-        success: false,
-      });
-    }
     station = new Station({
       ...userDets,
       userId: user._id,

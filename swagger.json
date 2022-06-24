@@ -52,7 +52,7 @@
         "tags": ["user"]
       }
     },
-    "/api/users/login-user": {
+    "/api/users/login": {
       "post": {
         "summary": "/api/users/login-user",
         "requestBody": {
@@ -92,26 +92,7 @@
         "tags": ["admin"]
       }
     },
-    "/api/users/login-admin": {
-      "post": {
-        "summary": "/api/users/login-admin",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/UserLogin"
-        },
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/UserLoginResponse200"
-          },
-          "403": {
-            "$ref": "#/components/responses/UserLoginResponse403"
-          },
-          "404": {
-            "$ref": "#/components/responses/UserLoginResponse404"
-          }
-        },
-        "tags": ["admin"]
-      }
-    },
+
     "/api/users": {
       "get": {
         "summary": "/api/users",

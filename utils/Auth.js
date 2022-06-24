@@ -26,10 +26,10 @@ const getListUsers = async (res) => {
   res.status(200).json(users);
 };
 
-const userBlock = async (userId, flag, res) => {
+const userBlock = async (email, flag, res) => {
   try {
     await User.updateOne(
-      { _id: userId },
+      { email: email },
       {
         $set: {
           block: flag,
@@ -130,12 +130,7 @@ const userLogin = async (userCreds, role, res) => {
     });
   }
   // We will check the role
-  if (user.role !== role) {
-    return res.status(403).json({
-      message: "Please make sure you are logging in from the right portal.",
-      success: false,
-    });
-  }
+
   // That means user is existing and trying to signin fro the right portal
   // Now check for the password
   let isMatch = await bcrypt.compare(password, user.password);
@@ -155,6 +150,7 @@ const userLogin = async (userCreds, role, res) => {
       block: user.block,
       role: user.role,
       email: user.email,
+      Notifications: user.messages,
       token: `Bearer ${token}`,
       expiresIn: 168,
     };
@@ -172,9 +168,9 @@ const userLogin = async (userCreds, role, res) => {
   }
 };
 
-const userDelete = async (id, res) => {
+const userDelete = async (email, res) => {
   try {
-    await User.deleteOne({ _id: id });
+    await User.deleteOne({ email: email });
     return res.status(201).json({
       message: "User deleted successfully.",
       success: true,
