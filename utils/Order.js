@@ -41,7 +41,7 @@ const orderAvalable = async (stationId, from, to) => {
   return flag;
 };
 
-const orderCreate = async (userId, stationId, startTime, endTime, res) => {
+const orderCreate = async (user, stationId, startTime, endTime, res) => {
   try {
     let station = await Station.findOne({ _id: stationId });
     if (!station) {
@@ -50,17 +50,9 @@ const orderCreate = async (userId, stationId, startTime, endTime, res) => {
         success: false,
       });
     }
-    let user = await User.findOne({ _id: userId });
-    if (!station) {
-      return res.status(404).json({
-        message: "User doesn't exist.",
-        success: false,
-      });
-    }
     let order = new Order({
       startTime: new Date(startTime),
       endTime: new Date(endTime),
-      endTime,
     });
     if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
       return res.status(500).json({

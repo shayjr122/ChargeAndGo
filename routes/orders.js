@@ -4,7 +4,7 @@ const { orderCreate, orderDelete, orders, order } = require("../utils/Order");
 
 router.post("/station/:stationId/", userAuth, block, async (req, res) => {
   await orderCreate(
-    req.user._id,
+    req.user,
     req.params.stationId,
     req.body.startTime,
     req.body.endTime,
