@@ -6,7 +6,6 @@ router.post("/station/:stationId/", userAuth, block, async (req, res) => {
   await orderCreate(
     req.user._id,
     req.params.stationId,
-    req.body.price,
     req.body.startTime,
     req.body.endTime,
     res

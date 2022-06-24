@@ -41,14 +41,7 @@ const orderAvalable = async (stationId, from, to) => {
   return flag;
 };
 
-const orderCreate = async (
-  userId,
-  stationId,
-  price,
-  startTime,
-  endTime,
-  res
-) => {
+const orderCreate = async (userId, stationId, startTime, endTime, res) => {
   try {
     let station = await Station.findOne({ _id: stationId });
     if (!station) {
@@ -67,7 +60,6 @@ const orderCreate = async (
     let order = new Order({
       startTime: new Date(startTime),
       endTime: new Date(endTime),
-      price,
       endTime,
     });
     if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
