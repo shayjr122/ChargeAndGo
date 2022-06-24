@@ -19,6 +19,7 @@ app.use(passport.initialize());
 // User Router Middleware
 app.use("/api/users", require("./routes/users"));
 app.use("/api/stations", require("./routes/stations"));
+app.use("/api/orders", require("./routes/orders"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get("*", (req, res) => {
   res.redirect("/api-docs");
