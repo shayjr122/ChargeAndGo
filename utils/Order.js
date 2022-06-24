@@ -8,7 +8,7 @@ const orders = async (res) => {
 };
 const order = async (orderId, res) => {
   try {
-    let order = await Order.findOne({ id: orderId });
+    let order = await Order.findOne({ _id: orderId });
     return res.status(200).json(order);
   } catch {
     return res.status(500).json({
@@ -17,6 +17,30 @@ const order = async (orderId, res) => {
     });
   }
 };
+
+function dateCheck(from, to, check) {
+  if (check <= to && check >= from) {
+    return true;
+  }
+  return false;
+}
+
+const orderAvalable = async (stationId, from, to) => {
+  try {
+    flag = true;
+    let station = await Station.findOne({ _id: stationId });
+    station.orders.forEach((order) => {
+      if (
+        dateCheck(order.startTime, order.endTime, from) &&
+        dateCheck(order.startTime, order.endTime, to)
+      ) {
+        flag = fales;
+      }
+    });
+  } catch {}
+  return flag;
+};
+
 const orderCreate = async (
   userId,
   stationId,
@@ -46,6 +70,12 @@ const orderCreate = async (
       price,
       endTime,
     });
+    if (!(await orderAvalable(stationId, order.startTime, order.endTime))) {
+      return res.status(500).json({
+        message: "Unable to create order.",
+        success: false,
+      });
+    }
     await order.save();
     station.orders.push(order);
     await station.save();
