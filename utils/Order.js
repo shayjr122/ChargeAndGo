@@ -34,7 +34,7 @@ const orderAvalable = async (stationId, from, to) => {
         dateCheck(order.startTime, order.endTime, from) &&
         dateCheck(order.startTime, order.endTime, to)
       ) {
-        flag = fales;
+        flag = false;
       }
     });
   } catch {}
